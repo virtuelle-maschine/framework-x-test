@@ -5,7 +5,8 @@ WORKDIR /app/
 ARG X_ENV=prod
 RUN set -eux ; \
   apk --no-cache add  \
-    ${PHPIZE_DEPS}  \
+    ${PHPIZE_DEPS} \
+    inotify-tools \
     libev \
   ; \
   pecl install ev; \

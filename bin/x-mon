@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+inotifywait -m -r -e modify,create,delete,move --format '%w%f' "$1" \
+| while read FILE
+do
+  echo "Filechange detected: $FILE - sending HUP"
+  kill -s HUP 1
+done

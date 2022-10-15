@@ -11,6 +11,7 @@ start_x() {
     #export PHP_IDE_CONFIG=x-test
     restart_default=1
     restart=1
+    #/app/bin/x-mon /app/src & # TODO add once src exists
     set -- \
       "-dxdebug.mode=debug" \
       "-dxdebug.client_host=host.docker.internal" \
