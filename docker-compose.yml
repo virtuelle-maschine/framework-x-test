@@ -1,0 +1,36 @@
+version: "2"
+
+services:
+
+  rp:
+    image: nginx:1.23.1-alpine
+    hostname: x-text-nginx
+    container_name: x-text-rp
+    depends_on:
+      - php-x
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./public/:/app/public/
+    ports:
+      - "8080:80"
+    environment:
+      - TZ=Europe/Berlin
+    restart: "no"
+
+  php-x:
+    build:
+      context: .
+      args:
+        - X_ENV=dev
+    image: virtuelle-maschine/x-test-php-x:latest
+    hostname: x-text-php-x
+    container_name: x-text-php-x
+    volumes:
+      - ./:/app/
+    environment:
+      - TZ=Europe/Berlin
+      - PHP_IDE_CONFIG=serverName=x-test
+      - X_ENV=dev
+    command: ["/app/bin/x-ctrl"]
+    restart: "no"
+    stop_signal: SIGTERM

@@ -1,0 +1,51 @@
+#!/usr/bin/env sh
+
+pid=0
+restart=0
+
+start_x() {
+  #set -eux
+  restart_default=0
+  set --
+  if [ "${X_ENV:-prod}" = "dev" ]; then
+    #export PHP_IDE_CONFIG=x-test
+    restart_default=1
+    restart=1
+    set -- \
+      "-dxdebug.mode=debug" \
+      "-dxdebug.client_host=host.docker.internal" \
+      "-dxdebug.client_port=9003" \
+      "-dxdebug.start_with_request=yes"
+  fi
+  while :; do
+    /usr/local/bin/php "$@" /app/bin/x.php &
+    pid=$!
+    wait "$pid"
+    if [ "$restart" = "0" ]; then
+      exit 0
+    fi
+    restart=restart_default
+  done
+}
+
+stop_x() {
+  if [ "$pid" -gt "0" ]; then
+    #kill -TERM "$pid" 2>/dev/null
+    kill -TERM "$pid"
+  fi
+}
+
+restart() {
+  restart=1
+  stop_x
+}
+
+stop() {
+  restart=0
+  stop_x
+}
+
+trap stop TERM INT QUIT
+trap restart HUP
+
+start_x

@@ -1,0 +1,15 @@
+{
+  "name": "virtuelle-maschine/x-test",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "map",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "clue/framework-x": "dev-main"
+  }
+}

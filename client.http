@@ -1,0 +1,8 @@
+###
+# @name GET /
+GET http://localhost:8080/
+
+###
+# @name GET /users/{name}
+GET http://localhost:8080/users/i-am-a-test
+
