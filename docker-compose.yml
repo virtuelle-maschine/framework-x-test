@@ -31,6 +31,6 @@ services:
       - TZ=Europe/Berlin
       - PHP_IDE_CONFIG=serverName=x-test
       - X_ENV=dev
-    command: ["/app/bin/x-ctrl"]
+    command: ["php", "/app/public/index.php"]
     restart: "no"
     stop_signal: SIGTERM
