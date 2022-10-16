@@ -2,14 +2,19 @@
   "name": "virtuelle-maschine/framework-x-test",
   "description": "description",
   "minimum-stability": "stable",
-  "license": "proprietary",
-  "authors": [
-    {
-      "name": "map",
-      "email": "email@example.com"
-    }
-  ],
   "require": {
+    "php": "~8.1",
     "clue/framework-x": "dev-main"
+  },
+  "autoload": {
+    "psr-4": {
+      "VirtuelleMaschine\\FrameworkXTest\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "VirtuelleMaschine\\FrameworkXTest\\Tests\\": "tests/"
+    }
   }
+
 }
