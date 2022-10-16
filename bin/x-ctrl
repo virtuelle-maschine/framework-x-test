@@ -11,15 +11,18 @@ start_x() {
     #export PHP_IDE_CONFIG=x-test
     restart_default=1
     restart=1
-    #/app/bin/x-mon /app/src & # TODO add once src exists
-    set -- \
-      "-dxdebug.mode=debug" \
-      "-dxdebug.client_host=host.docker.internal" \
-      "-dxdebug.client_port=9003" \
-      "-dxdebug.start_with_request=yes"
+    /app/bin/x-mon /app/src &
+    if nc -w 1 -z host.docker.internal 9003; then
+      echo "Setting up debugging"
+      set -- \
+        "-dxdebug.mode=debug" \
+        "-dxdebug.client_host=host.docker.internal" \
+        "-dxdebug.client_port=9003" \
+        "-dxdebug.start_with_request=yes"
+    fi
   fi
   while :; do
-    /usr/local/bin/php "$@" /app/bin/x.php &
+    /usr/local/bin/php "$@" /app/app/index.php &
     pid=$!
     wait "$pid"
     if [ "$restart" = "0" ]; then
